@@ -1,0 +1,1 @@
+このディレクトリはUdemyのReactNative学習用
