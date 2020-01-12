@@ -27,10 +27,8 @@ export default function App() {
     setEnteredGoal("");
   };
 
-  const deleteGoalHandler = deleteTargetIndex => {
-    const newGoals = courseGoals.filter(
-      (_, index) => index !== deleteTargetIndex
-    );
+  const deleteGoalHandler = id => {
+    const newGoals = courseGoals.filter(item => item.key !== id);
     setCourseGoal(newGoals);
   };
 
@@ -45,11 +43,11 @@ export default function App() {
       </View>
       <FlatList
         data={courseGoals}
-        renderItem={({ item, index }) => (
+        renderItem={({ item }) => (
           <GoalItem
             value={item.value}
-            index={index}
-            deleteHandler={deleteGoalHandler}
+            id={item.key}
+            onDelete={deleteGoalHandler}
           />
         )}
       />
