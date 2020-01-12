@@ -6,6 +6,11 @@ export default function App() {
   const [couseGoals, setCourseGoal] = useState([]);
 
   const goalInputHandler = enterdGoal => {
+    // Webだとイベントが実行する関数の引数はeventオブジェクトだけど
+    // ここでは、入力文字列そのものだった
+
+    // console.log()も使える。すごい。ターミナル or expoのdevtoolに表示される
+    // console.log(enterdGoal)
     setEnteredGoal(enterdGoal);
   };
 
@@ -61,6 +66,7 @@ const styles = StyleSheet.create({
   },
   listItem: {
     padding: 10,
+    // margin: 10 0　と同じ。わかりやすいね。
     marginVertical: 10,
     backgroundColor: "#ccc",
     borderColor: "black",
