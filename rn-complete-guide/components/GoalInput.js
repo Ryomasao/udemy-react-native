@@ -1,26 +1,50 @@
 import React from "react";
-import { TextInput, Button, StyleSheet } from "react-native";
+import { View, TextInput, Button, StyleSheet, Modal } from "react-native";
 
-const GoalInput = ({ value, changeHandler, addHandler }) => {
+const GoalInput = ({ value, changeHandler, addHandler, visible, onCancel }) => {
   return (
-    <React.Fragment>
-      <TextInput
-        placeholder="Course Goal"
-        style={styles.input}
-        value={value}
-        onChangeText={changeHandler}
-      />
-      <Button title="ADD" onPress={addHandler} />
-    </React.Fragment>
+    <Modal visible={visible} animationType="slide">
+      <View style={styles.inputContainer}>
+        <TextInput
+          placeholder="Course Goal"
+          style={styles.input}
+          value={value}
+          onChangeText={changeHandler}
+        />
+        <View style={styles.buttonContainer}>
+          <View style={styles.button}>
+            <Button title="CANCEL" onPress={onCancel} color="red" />
+          </View>
+          <View style={styles.button}>
+            <Button title="ADD" onPress={addHandler} />
+          </View>
+        </View>
+      </View>
+    </Modal>
   );
 };
 
 const styles = StyleSheet.create({
+  inputContainer: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center"
+  },
   input: {
     width: "80%",
     borderColor: "black",
     borderWidth: 1,
-    padding: 10
+    padding: 10,
+    marginBottom: 10
+  },
+  buttonContainer: {
+    width: "80%",
+    flexDirection: "row",
+    justifyContent: "space-between"
+  },
+  button: {
+    width: "40%",
+    borderWidth: 1
   }
 });
 

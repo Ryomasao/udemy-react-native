@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { StyleSheet, View, FlatList } from "react-native";
+import { StyleSheet, View, FlatList, Button } from "react-native";
 
 import GoalInput from "./components/GoalInput";
 import GoalItem from "./components/GoalItem";
@@ -7,6 +7,7 @@ import GoalItem from "./components/GoalItem";
 export default function App() {
   const [enteredGoal, setEnteredGoal] = useState("");
   const [courseGoals, setCourseGoal] = useState([]);
+  const [showModal, setShowModal] = useState(false);
 
   const goalInputHandler = enteredGoal => {
     // Webだとイベントが実行する関数の引数はeventオブジェクトだけど
@@ -34,13 +35,14 @@ export default function App() {
 
   return (
     <View style={styles.screen}>
-      <View style={styles.inputContainer}>
-        <GoalInput
-          value={enteredGoal}
-          changeHandler={goalInputHandler}
-          addHandler={addGoalHandelr}
-        />
-      </View>
+      <Button title="Add new Goal" onPress={() => setShowModal(true)} />
+      <GoalInput
+        visible={showModal}
+        onCancel={() => setShowModal(false)}
+        value={enteredGoal}
+        changeHandler={goalInputHandler}
+        addHandler={addGoalHandelr}
+      />
       <FlatList
         data={courseGoals}
         renderItem={({ item }) => (
@@ -58,10 +60,5 @@ export default function App() {
 const styles = StyleSheet.create({
   screen: {
     padding: 50
-  },
-  inputContainer: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    alignItems: "center"
   }
 });
