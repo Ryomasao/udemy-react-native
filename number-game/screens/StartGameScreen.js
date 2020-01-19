@@ -12,6 +12,7 @@ import Colors from '../const/colors'
 import Card from '../components/Card'
 import NumberContainer from '../components/NumberContainer'
 import Input from '../components/Input'
+import TitleText from '../components/TitleText'
 
 const StartGameScreens = ({ onStart }) => {
   const [enteredValue, setEntededValue] = useState('')
@@ -62,7 +63,7 @@ const StartGameScreens = ({ onStart }) => {
       }}
     >
       <View style={styles.screen}>
-        <Text style={styles.title}>Start a New Game!</Text>
+        <TitleText style={styles.title}>Start a New Game!</TitleText>
         <Card style={styles.inputContainer}>
           <Text>Select a Number</Text>
           <Input
@@ -104,9 +105,11 @@ const styles = StyleSheet.create({
     padding: 10,
     alignItems: 'center',
   },
+  // RNのfontは子要素に適用されない
+  // なので、全体に適用させたい場合、以下の2案がある
+  // 1.フォントを適用させたコンポーネントをつくる
+  // 2.constとかにDefaultStyleをStyleSheet.create()で用意して、コンポーネントのstyleに当てる
   title: {
-    fontSize: 20,
-    fontFamily: 'open-sans-bold',
     marginVertical: 10,
   },
   inputContainer: {

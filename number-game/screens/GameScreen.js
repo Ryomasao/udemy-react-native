@@ -9,7 +9,6 @@ const generateRandomBetween = (min, max, exclude) => {
   min = Math.ceil(min)
   // 切り捨て
   max = Math.floor(max)
-  console.log(min, max)
   const rndNum = Math.floor(Math.random() * (max - min)) + min
   if (rndNum === exclude) {
     return generateRandomBetween(min, max, exclude)
