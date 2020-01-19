@@ -109,6 +109,8 @@ const styles = StyleSheet.create({
   // なので、全体に適用させたい場合、以下の2案がある
   // 1.フォントを適用させたコンポーネントをつくる
   // 2.constとかにDefaultStyleをStyleSheet.create()で用意して、コンポーネントのstyleに当てる
+  // Text in Textの場合、子要素に適用される
+  // https://www.udemy.com/course/react-native-the-practical-guide/learn/lecture/15420214#questions
   title: {
     marginVertical: 10,
   },

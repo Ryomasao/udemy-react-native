@@ -1,6 +1,7 @@
 import React from 'react'
-import { View, StyleSheet, Button, Image } from 'react-native'
+import { View, StyleSheet, Button, Image, Text } from 'react-native'
 
+import Color from '../const/colors'
 import TitleText from '../components/TitleText'
 import BodyText from '../components/BodyText'
 
@@ -11,12 +12,23 @@ const GameOverScreen = ({ roundsNumber, userNumber, onRestart }) => {
       <View style={styles.imageContainer}>
         <Image
           source={require('../assets/success.png')}
+          // 画像読み込みの際にfadeのアニメーションも用意してくれてる
+          // URLで取得してくるときにはよい。デフォルトは300msになってる？
+          //fadeDuaration
+          // localImageじゃない場合は、画像のサイズがわからないので、width,heightの指定はしておこおうね
+          //source={{uri:''}}
           style={styles.image}
           resizeMethod="contain"
         />
       </View>
-      <BodyText>Number of rounds:{roundsNumber}</BodyText>
-      <BodyText>Number was:{userNumber}</BodyText>
+      <View style={styles.resultConainter}>
+        <BodyText style={styles.resultText}>
+          Your phone needed
+          <Text style={styles.highlight}>{roundsNumber}</Text> rounds to guess
+          the number
+          <Text style={styles.highlight}>{userNumber}</Text>.
+        </BodyText>
+      </View>
       <Button title="RESTART" onPress={onRestart} />
     </View>
   )
@@ -40,6 +52,17 @@ const styles = StyleSheet.create({
   image: {
     width: '100%',
     height: '100%',
+  },
+  resultConainter: {
+    marginVertical: 15,
+    marginHorizontal: 30,
+  },
+  resultText: {
+    textAlign: 'center',
+  },
+  highlight: {
+    fontFamily: 'open-sans-bold',
+    color: Color.primary,
   },
 })
 
