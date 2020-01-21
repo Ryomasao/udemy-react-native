@@ -19,7 +19,7 @@ const GameOverScreen = ({ roundsNumber, userNumber, onRestart }) => {
           // localImageじゃない場合は、画像のサイズがわからないので、width,heightの指定はしておこおうね
           //source={{uri:''}}
           style={styles.image}
-          resizeMethod="contain"
+          resizeMethod="auto"
         />
       </View>
       <View style={styles.resultConainter}>

@@ -1,5 +1,12 @@
 import React, { useState, useRef, useEffect } from 'react'
-import { View, Text, StyleSheet, Alert, ScrollView } from 'react-native'
+import {
+  View,
+  Text,
+  StyleSheet,
+  Alert,
+  ScrollView,
+  FlatList,
+} from 'react-native'
 // アイコンも提供してる。すごい。
 import { Ionicons } from '@expo/vector-icons'
 
@@ -21,10 +28,22 @@ const generateRandomBetween = (min, max, exclude) => {
   }
 }
 
-const renderListItem = (value, numOfRound) => (
-  <View key={value} style={styles.listItem}>
-    <BodyText>#{numOfRound}</BodyText>
-    <BodyText>{value}</BodyText>
+// bindのメモ
+//
+//  function hoge(item, item2, item3) {
+//    console.log(item, item2, item3);
+//  }
+//  const n = hoge.bind(this, 2, 3);
+//  n(1);
+//
+//  2 3 1
+//
+// bindで渡した引数は、arg0,arg1にセットされ、bindで生成した関数に渡した引数は、最後にセットされている
+
+const renderListItem = (listLength, itemData) => (
+  <View style={styles.listItem}>
+    <BodyText>#{listLength - itemData.index}</BodyText>
+    <BodyText>{itemData.item}</BodyText>
   </View>
 )
 
@@ -85,11 +104,22 @@ const GameScreen = ({ userChoice, onGameOver }) => {
         </MainButton>
       </Card>
       <View style={styles.listContainer}>
+        {/*
         <ScrollView contentContainerStyle={styles.list}>
           {pastGuesses.map((guess, index) =>
             renderListItem(guess, pastGuesses.length - index)
           )}
         </ScrollView>
+         */}
+        <FlatList
+          // keyをitemそのものにする
+          // またkeyはstringじゃなきゃだめ
+          keyExtractor={item => item.toString()}
+          data={pastGuesses}
+          //renderItem={item => renderListItem(item, pastGuesses.length)}
+          renderItem={renderListItem.bind(this, pastGuesses.length)}
+          contentContainerStyle={styles.list}
+        />
       </View>
     </View>
   )
@@ -109,16 +139,15 @@ const styles = StyleSheet.create({
     maxWidth: '80%',
   },
   listContainer: {
-    width: '80%',
+    width: '60%',
     // androidだと以下が必要
     flex: 1,
   },
   // scrollViewにstyleをあてるにはcontentContainerStyleを使う
   list: {
-    // itemが多い場合にスクロールさせたい
-    //flexGrow: 1,
-    alignItems: 'center',
-    flex: 1,
+    // itemが多い場合にスクロールさせたいのでflexGrowを指定する
+    //flex: 1,
+    flexGrow: 1,
     justifyContent: 'flex-end',
   },
   listItem: {
@@ -128,8 +157,8 @@ const styles = StyleSheet.create({
     marginVertical: 10,
     backgroundColor: 'white',
     flexDirection: 'row',
-    justifyContent: 'space-around',
-    width: '60%',
+    justifyContent: 'space-between',
+    width: '100%',
   },
 })
 
