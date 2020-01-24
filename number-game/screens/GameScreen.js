@@ -1,15 +1,9 @@
 import React, { useState, useRef, useEffect } from 'react'
-import {
-  View,
-  Text,
-  StyleSheet,
-  Alert,
-  ScrollView,
-  FlatList,
-} from 'react-native'
-// アイコンも提供してる。すごい。
+import { View, Text, StyleSheet, Alert, FlatList } from 'react-native'
+// アイコンも提供してる。すごい
 import { Ionicons } from '@expo/vector-icons'
 
+import { width } from '../utils/device'
 import NumberContainer from '../components/NumberContainer'
 import Card from '../components/Card'
 import MainButton from '../components/MainButton'
@@ -139,7 +133,7 @@ const styles = StyleSheet.create({
     maxWidth: '80%',
   },
   listContainer: {
-    width: '60%',
+    width: width > 350 ? '60%' : '80%',
     // androidだと以下が必要
     flex: 1,
   },

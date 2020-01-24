@@ -1,5 +1,6 @@
 import React from 'react'
-import { View, StyleSheet, Button, Image, Text } from 'react-native'
+import { View, StyleSheet, Image, Text } from 'react-native'
+import { width, height } from '../utils/device'
 
 import Color from '../const/colors'
 import TitleText from '../components/TitleText'
@@ -47,7 +48,7 @@ const styles = StyleSheet.create({
     borderRadius: 200,
     borderWidth: 3,
     borderColor: 'black',
-    marginVertical: 30,
+    marginVertical: height > 500 ? 30 : 15,
     overflow: 'hidden',
   },
   image: {
