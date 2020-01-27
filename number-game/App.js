@@ -1,5 +1,5 @@
-import React, { useState } from 'react'
-import { StyleSheet, View } from 'react-native'
+import React, { useState, useEffect } from 'react'
+import { StyleSheet, View, Dimensions } from 'react-native'
 import * as Font from 'expo-font'
 import { AppLoading } from 'expo'
 
@@ -20,6 +20,18 @@ export default function App() {
   const [userNumber, setUserNumber] = useState()
   const [guessRounds, setGuessRounds] = useState(0)
   const [isDataLoaded, setisDataLoaded] = useState(false)
+  const [isRotate, setIsRotate] = useState(false)
+
+  useEffect(() => {
+    const updateLayout = () => {
+      setIsRotate(current => !current)
+    }
+    // Dimensionsをdevice.jsに閉じ込めたかった。
+    // useEffectでイベントリスナーを使う場合の処理を外に出すことってできないかな
+    Dimensions.addEventListener('change', updateLayout)
+
+    return Dimensions.removeEventListener('change', updateLayout)
+  }, [])
 
   // キャッシュやfontのファイルを読み込みたい場合、その読み込みは非同期になる
   // 読み込みが完了するまではコンポーネントを非表示にする
