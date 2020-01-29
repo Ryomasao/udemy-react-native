@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { StyleSheet, View, Dimensions } from 'react-native'
+import { StyleSheet, View, Dimensions, Platform } from 'react-native'
 import * as Font from 'expo-font'
 import { AppLoading } from 'expo'
 
@@ -20,7 +20,11 @@ export default function App() {
   const [userNumber, setUserNumber] = useState()
   const [guessRounds, setGuessRounds] = useState(0)
   const [isDataLoaded, setisDataLoaded] = useState(false)
+  // expoにOrientationを知る関数が用意されてるっぽい
   const [isRotate, setIsRotate] = useState(false)
+
+  // androidかiosを判断できる
+  // console.log(Platform.OS)
 
   useEffect(() => {
     const updateLayout = () => {
