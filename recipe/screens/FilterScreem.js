@@ -9,8 +9,6 @@ const FilterScreen = props => {
   )
 }
 
-const styles = StyleSheet.create()
-
 const styles = StyleSheet.create({
   screen: {
     flex: 1,
