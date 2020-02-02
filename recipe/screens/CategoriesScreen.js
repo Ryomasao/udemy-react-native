@@ -5,18 +5,23 @@ import {
   TouchableOpacity,
   FlatList,
   StyleSheet,
-  Platform,
 } from 'react-native'
 
 import { CATEGORIES } from '../data/dummy-data'
-import Colors from '../constants/Color'
 
 const CategoriesScreen = props => {
   const renderGridItem = itemData => {
     return (
       <TouchableOpacity
         onPress={() => {
-          props.navigation.navigate({ routeName: 'CategoryMeals' })
+          // paramsを渡すときは以下がshorthand
+          // navigate('name', {})
+          props.navigation.navigate({
+            routeName: 'CategoryMeals',
+            params: {
+              categoryId: itemData.item.id,
+            },
+          })
         }}
         style={styles.gridItem}
       >
@@ -43,10 +48,11 @@ CategoriesScreen.navigationOptions = {
   headerTitle: 'Meals Categories',
   // 他に設定できるオプションは公式を見よう
   // https://reactnavigation.org/docs/en/next/headers.html#setting-the-header-title
-  headerStyle: {
-    backgroundColor: Platform.OS === 'android' ? Colors.primaryColor : '',
-  },
-  headerTintColor: Platform.OS === 'ios' ? Colors.primaryColor : '',
+  // see MealsNabigation.js 共通の設定はそっちに書くことができる
+  //headerStyle: {
+  //  backgroundColor: Platform.OS === 'android' ? Colors.primaryColor : '',
+  //},
+  //headerTintColor: Platform.OS === 'ios' ? Colors.primaryColor : '',
 }
 
 const styles = StyleSheet.create({
