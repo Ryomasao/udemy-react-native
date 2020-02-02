@@ -1,35 +1,20 @@
 import React from 'react'
-import {
-  View,
-  Text,
-  TouchableOpacity,
-  FlatList,
-  StyleSheet,
-} from 'react-native'
+import { FlatList, StyleSheet } from 'react-native'
 
 import { CATEGORIES } from '../data/dummy-data'
+import CategoryGridTile from '../components/CategoryGridTile'
 
 const CategoriesScreen = props => {
   const renderGridItem = itemData => {
-    return (
-      <TouchableOpacity
-        onPress={() => {
-          // paramsを渡すときは以下がshorthand
-          // navigate('name', {})
-          props.navigation.navigate({
-            routeName: 'CategoryMeals',
-            params: {
-              categoryId: itemData.item.id,
-            },
-          })
-        }}
-        style={styles.gridItem}
-      >
-        <View>
-          <Text>{itemData.item.title}</Text>
-        </View>
-      </TouchableOpacity>
-    )
+    const onPress = () => {
+      props.navigation.navigate({
+        routeName: 'CategoryMeals',
+        params: {
+          categoryId: itemData.item.id,
+        },
+      })
+    }
+    return <CategoryGridTile category={itemData.item} onPress={onPress} />
   }
 
   return (
@@ -55,17 +40,6 @@ CategoriesScreen.navigationOptions = {
   //headerTintColor: Platform.OS === 'ios' ? Colors.primaryColor : '',
 }
 
-const styles = StyleSheet.create({
-  screen: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  gridItem: {
-    flex: 1,
-    margin: 15,
-    height: 150,
-  },
-})
+const styles = StyleSheet.create({})
 
 export default CategoriesScreen
