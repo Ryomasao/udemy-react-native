@@ -14,6 +14,13 @@ import CategoryMealsScreen from '../screens/CategoryMealScreen'
 import MealDetailScreen from '../screens/MealDetailScreen'
 import FavoriteScreen from '../screens/FavoriteScreen'
 
+const defaultNavigationOptions = {
+  headerStyle: {
+    backgroundColor: Platform.OS === 'android' ? Colors.primaryColor : '',
+  },
+  headerTintColor: Platform.OS === 'ios' ? Colors.primaryColor : '',
+}
+
 const MealsNavigator = createStackNavigator(
   {
     Categories: CategoriesScreen,
@@ -36,12 +43,16 @@ const MealsNavigator = createStackNavigator(
     // 初回にルートされるScreen
     // initialRouteName: ''
     // 全体に適用させたいならこっち
-    defaultNavigationOptions: {
-      headerStyle: {
-        backgroundColor: Platform.OS === 'android' ? Colors.primaryColor : '',
-      },
-      headerTintColor: Platform.OS === 'ios' ? Colors.primaryColor : '',
-    },
+    defaultNavigationOptions: defaultNavigationOptions,
+  }
+)
+const FavNavigator = createStackNavigator(
+  {
+    Favorite: FavoriteScreen,
+    MealDetail: MealDetailScreen,
+  },
+  {
+    defaultNavigationOptions: defaultNavigationOptions,
   }
 )
 
@@ -64,7 +75,7 @@ const MealsFavTabNavigator = createBottomTabNavigator(
     },
     // screenを省略したshorthand
     Favorite: {
-      screen: FavoriteScreen,
+      screen: FavNavigator,
       navigationOptions: {
         //tabBarLabel: 'youcanchangeIconString',
         tabBarIcon: tabInfo => {

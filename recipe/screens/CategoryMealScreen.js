@@ -1,39 +1,17 @@
 import React from 'react'
-import { View, FlatList, StyleSheet } from 'react-native'
+import { StyleSheet } from 'react-native'
 
 import { CATEGORIES, MEALS } from '../data/dummy-data'
-import MealItem from '../components/MealItem'
+import MealList from '../components/MealList'
 
 const CategoryMealScreen = props => {
-  const renderMealItem = itemData => {
-    const onSelectMeal = () => {
-      props.navigation.navigate({
-        routeName: 'MealDetail',
-        params: {
-          mealId: itemData.item.id,
-        },
-      })
-    }
-
-    return <MealItem {...itemData.item} onSelectMeal={onSelectMeal} />
-  }
-
   const catId = props.navigation.getParam('categoryId')
 
   const displayMeals = MEALS.filter(
     meal => meal.categoryIds.indexOf(catId) >= 0
   )
 
-  return (
-    <View style={styles.screen}>
-      <FlatList
-        data={displayMeals}
-        keyExtractor={(item, index) => item.id}
-        renderItem={renderMealItem}
-        style={{ width: '100%' }}
-      />
-    </View>
-  )
+  return <MealList meals={displayMeals} navigation={props.navigation} />
 }
 
 // DynamicSetiing
@@ -46,12 +24,6 @@ CategoryMealScreen.navigationOptions = navigationData => {
   }
 }
 
-const styles = StyleSheet.create({
-  screen: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-})
+const styles = StyleSheet.create({})
 
 export default CategoryMealScreen
