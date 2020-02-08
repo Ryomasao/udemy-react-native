@@ -1,7 +1,12 @@
+import React from 'react'
 import { Platform } from 'react-native'
 import { createAppContainer } from 'react-navigation'
 import { createStackNavigator } from 'react-navigation-stack'
 import { createBottomTabNavigator } from 'react-navigation-tabs'
+// マテリアルデザイン版のtab
+// https://reactnavigation.org/docs/en/4.x/material-bottom-tab-navigator.html
+//import { createMaterialBottomTabNavigator } from 'react-navigation-material-bottom-tabs'
+import { Ionicons } from '@expo/vector-icons'
 
 import Colors from '../constants/Color'
 import CategoriesScreen from '../screens/CategoriesScreen'
@@ -40,13 +45,42 @@ const MealsNavigator = createStackNavigator(
   }
 )
 
-const MealsFavTabNavigator = createBottomTabNavigator({
-  Meals: {
-    // Navigatorに他のNavigatorを含むこともできる！
-    screen: MealsNavigator,
+const MealsFavTabNavigator = createBottomTabNavigator(
+  {
+    Meals: {
+      // Navigatorに他のNavigatorを含むこともできる！
+      screen: MealsNavigator,
+      navigationOptions: {
+        tabBarIcon: tabInfo => {
+          return (
+            <Ionicons
+              name="ios-restaurant"
+              size={25}
+              color={tabInfo.tintColor}
+            />
+          )
+        },
+      },
+    },
+    // screenを省略したshorthand
+    Favorite: {
+      screen: FavoriteScreen,
+      navigationOptions: {
+        //tabBarLabel: 'youcanchangeIconString',
+        tabBarIcon: tabInfo => {
+          return (
+            <Ionicons name="ios-star" size={25} color={tabInfo.tintColor} />
+          )
+        },
+      },
+    },
   },
-  // screenを省略したshorthand
-  Favorite: FavoriteScreen,
-})
+  {
+    tabBarOptions: {
+      // 選択済みのtabの文字色
+      activeTintColor: Colors.accentColor,
+    },
+  }
+)
 
 export default createAppContainer(MealsFavTabNavigator)
