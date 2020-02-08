@@ -1,5 +1,3 @@
-import MealDetailScreen from '../screens/MealDetailScreen'
-
 class Meal {
   constructor(
     id,

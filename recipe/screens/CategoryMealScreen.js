@@ -1,12 +1,21 @@
 import React from 'react'
-import { View, Text, Button, FlatList, StyleSheet } from 'react-native'
+import { View, FlatList, StyleSheet } from 'react-native'
 
 import { CATEGORIES, MEALS } from '../data/dummy-data'
 import MealItem from '../components/MealItem'
 
 const CategoryMealScreen = props => {
   const renderMealItem = itemData => {
-    return <MealItem {...itemData.item} />
+    const onSelectMeal = () => {
+      props.navigation.navigate({
+        routeName: 'MealDetail',
+        params: {
+          mealId: itemData.item.id,
+        },
+      })
+    }
+
+    return <MealItem {...itemData.item} onSelectMeal={onSelectMeal} />
   }
 
   const catId = props.navigation.getParam('categoryId')
@@ -22,26 +31,6 @@ const CategoryMealScreen = props => {
         keyExtractor={(item, index) => item.id}
         renderItem={renderMealItem}
         style={{ width: '100%' }}
-      />
-    </View>
-  )
-
-  return (
-    <View style={styles.screen}>
-      <Text>The Category Meal Screen</Text>
-      <Text>{displayMeals.title}</Text>
-      <Button
-        title="Go to Meals"
-        onPress={() => {
-          props.navigation.navigate('MealDetail')
-        }}
-      />
-      <Button
-        title="Back"
-        onPress={() => {
-          props.navigation.goBack()
-          // popも使える。
-        }}
       />
     </View>
   )
