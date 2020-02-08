@@ -1,11 +1,13 @@
 import { Platform } from 'react-native'
 import { createAppContainer } from 'react-navigation'
 import { createStackNavigator } from 'react-navigation-stack'
+import { createBottomTabNavigator } from 'react-navigation-tabs'
 
 import Colors from '../constants/Color'
 import CategoriesScreen from '../screens/CategoriesScreen'
 import CategoryMealsScreen from '../screens/CategoryMealScreen'
 import MealDetailScreen from '../screens/MealDetailScreen'
+import FavoriteScreen from '../screens/FavoriteScreen'
 
 const MealsNavigator = createStackNavigator(
   {
@@ -38,4 +40,13 @@ const MealsNavigator = createStackNavigator(
   }
 )
 
-export default createAppContainer(MealsNavigator)
+const MealsFavTabNavigator = createBottomTabNavigator({
+  Meals: {
+    // Navigatorに他のNavigatorを含むこともできる！
+    screen: MealsNavigator,
+  },
+  // screenを省略したshorthand
+  Favorite: FavoriteScreen,
+})
+
+export default createAppContainer(MealsFavTabNavigator)
