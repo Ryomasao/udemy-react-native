@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useCallback } from 'react'
 import { View, Text, StyleSheet, Switch } from 'react-native'
 import { HeaderButtons, Item } from 'react-navigation-header-buttons'
+import { connect } from 'react-redux'
 
 import HeaderButton from '../components/HeaderButton'
 import Colors from '../constants/Color'
@@ -119,4 +120,4 @@ const styles = StyleSheet.create({
   },
 })
 
-export default FilterScreen
+export default connect(state => state)(FilterScreen)

@@ -10,6 +10,7 @@ const MealList = ({ meals, navigation }) => {
         routeName: 'MealDetail',
         params: {
           mealId: itemData.item.id,
+          mealTitle: itemData.item.title,
         },
       })
     }

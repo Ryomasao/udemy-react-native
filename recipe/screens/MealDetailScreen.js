@@ -1,10 +1,11 @@
-import React from 'react'
+import React, { useEffect, useCallback } from 'react'
 import { ScrollView, Image, View, Text, StyleSheet } from 'react-native'
 import { HeaderButtons, Item } from 'react-navigation-header-buttons'
+import { useSelector, useDispatch } from 'react-redux'
 
-import { MEALS } from '../data/dummy-data'
 import HeaderButton from '../components/HeaderButton'
 import DefaultText from '../components/DefaultText'
+import { toggleFavorite } from '../store/actions/meals'
 
 const ListItem = props => {
   return (
@@ -16,7 +17,24 @@ const ListItem = props => {
 
 const MealDetailScreen = props => {
   const mealId = props.navigation.getParam('mealId')
-  const meal = MEALS.find(meal => meal.id === mealId)
+  // useSeletorとconnect、どちらもReduxに接続している点はかわらないんだけど、記述コストがかるくって気軽に接続しちゃうね
+  // とはいえ、DetailScreenはReduxに依存ではなくpropsでもらうほうがよい気もする
+  const availableMeals = useSelector(state => state.meals.meals)
+  const meal = availableMeals.find(meal => meal.id === mealId)
+
+  const dispatch = useDispatch()
+  const toggleFavoriteHandler = useCallback(() => {
+    dispatch(toggleFavorite(mealId))
+  }, [dispatch, mealId])
+
+  useEffect(() => {
+    //componentからheaderにデータを渡す試み
+    //これだとrender→setParamsになるので、初回renderにデータがないのであんまよくない
+    props.navigation.setParams({ mealTitle: meal.title })
+    // dispatchはいいのかね
+    props.navigation.setParams({ toggleFav: toggleFavoriteHandler })
+  }, [toggleFavoriteHandler])
+
   return (
     <ScrollView>
       <Image source={{ uri: meal.imageUrl }} style={styles.image} />
@@ -39,11 +57,12 @@ const MealDetailScreen = props => {
 
 // DynamicSetiing
 MealDetailScreen.navigationOptions = navigationData => {
-  const mealId = navigationData.navigation.getParam('mealId')
-  const meal = MEALS.find(meal => meal.id === mealId)
+  // useSelectorはfunctinalComponentの中でしか使えないから、ここでは使えない
+  const mealTitle = navigationData.navigation.getParam('mealTitle')
+  const toggleFavorite = navigationData.navigation.getParam('toggleFav')
 
   return {
-    headerTitle: meal.title,
+    headerTitle: mealTitle,
     // ヘッダーのカスタマイズ
     // jsxを直接書くこともできるけど、プラットフォームごとの調整がかなりしんどい
     //headerRight: <Text>Fav </Text>,
@@ -51,7 +70,7 @@ MealDetailScreen.navigationOptions = navigationData => {
     // HeaderButtonsコンポーネントに、作ったHeaderComponentを渡すのがちょっと謎
     headerRight: () => (
       <HeaderButtons HeaderButtonComponent={HeaderButton}>
-        <Item title="Favorite" iconName="ios-star" onPress={() => {}} />
+        <Item title="Favorite" iconName="ios-star" onPress={toggleFavorite} />
       </HeaderButtons>
     ),
   }

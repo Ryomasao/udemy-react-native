@@ -1,15 +1,16 @@
 import React from 'react'
-import { View, Text, StyleSheet } from 'react-native'
+import { View, StyleSheet } from 'react-native'
 import { HeaderButtons, Item } from 'react-navigation-header-buttons'
+import { useSelector } from 'react-redux'
 
-import { MEALS } from '../data/dummy-data'
 import MealList from '../components/MealList'
 import HeaderButton from '../components/HeaderButton'
 
 const FavoriteScreen = props => {
+  const favoriteMeals = useSelector(state => state.meals.favoriteMeals)
   return (
     <View style={styles.screen}>
-      <MealList meals={MEALS} navigation={props.navigation} />
+      <MealList meals={favoriteMeals} navigation={props.navigation} />
     </View>
   )
 }
