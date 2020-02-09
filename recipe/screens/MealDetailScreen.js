@@ -27,6 +27,7 @@ MealDetailScreen.navigationOptions = navigationData => {
     // jsxを直接書くこともできるけど、プラットフォームごとの調整がかなりしんどい
     //headerRight: <Text>Fav </Text>,
     // react-navigation-header-buttonsのパッケージを使う
+    // HeaderButtonsコンポーネントに、作ったHeaderComponentを渡すのがちょっと謎
     headerRight: () => (
       <HeaderButtons HeaderButtonComponent={HeaderButton}>
         <Item title="Favorite" iconName="ios-star" onPress={() => {}} />

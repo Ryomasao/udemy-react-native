@@ -1,29 +1,27 @@
 import React from 'react'
 import { View, Text, StyleSheet } from 'react-native'
+
 import { HeaderButtons, Item } from 'react-navigation-header-buttons'
 
-import { MEALS } from '../data/dummy-data'
-import MealList from '../components/MealList'
 import HeaderButton from '../components/HeaderButton'
 
-const FavoriteScreen = props => {
+const FilterScreen = props => {
   return (
     <View style={styles.screen}>
-      <MealList meals={MEALS} navigation={props.navigation} />
+      <Text>The Filter Screen</Text>
     </View>
   )
 }
 
-FavoriteScreen.navigationOptions = navData => {
+FilterScreen.navigationOptions = navData => {
   return {
-    headerTitle: 'Your Favorites',
+    headerTitle: 'Your Filters',
     headerLeft: () => (
       <HeaderButtons HeaderButtonComponent={HeaderButton}>
         <Item
           title="Menu"
           iconName="ios-menu"
           onPress={() => {
-            // 便利な関数
             navData.navigation.toggleDrawer()
           }}
         />
@@ -40,4 +38,4 @@ const styles = StyleSheet.create({
   },
 })
 
-export default FavoriteScreen
+export default FilterScreen
