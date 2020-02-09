@@ -1,14 +1,68 @@
-import React from 'react'
-import { View, Text, StyleSheet } from 'react-native'
-
+import React, { useState, useEffect, useCallback } from 'react'
+import { View, Text, StyleSheet, Switch } from 'react-native'
 import { HeaderButtons, Item } from 'react-navigation-header-buttons'
 
 import HeaderButton from '../components/HeaderButton'
+import Colors from '../constants/Color'
+
+const FilterSwitch = props => {
+  return (
+    <View style={styles.filterContainer}>
+      <Text>{props.label}</Text>
+      <Switch
+        value={props.state}
+        onValueChange={newValue => props.onChange(newValue)}
+        trackColor={{ true: Colors.primaryColor }}
+        //thumbColor={Colors.primaryColor}
+      />
+    </View>
+  )
+}
 
 const FilterScreen = props => {
+  const { navigation } = props
+
+  const [isGlutenFree, setIsGlutenFree] = useState(false)
+  const [isLactoseFree, setIsLactoseFree] = useState(false)
+  const [isVegan, setIsVegan] = useState(false)
+  const [isVegetarian, setIsVegetarian] = useState(false)
+
+  // saveFilters関数はrenderingの度に作成されてしまう
+  // useCallbackを使うことで、[]に指定した値が変わらない限り、関数は生成されない
+  const saveFilters = useCallback(() => {
+    const appliedFiters = {
+      gulutenFree: isGlutenFree,
+      lactoseFree: isLactoseFree,
+      vegan: isVegan,
+      vegetraian: isVegetarian,
+    }
+    console.log(appliedFiters)
+  }, [isGlutenFree, isLactoseFree, isVegan, isVegetarian])
+
+  // そしてuseEffectも同じで、saveFilter関数がかわったタイミングでのみ実行する
+  useEffect(() => {
+    navigation.setParams({ save: saveFilters })
+  }, [saveFilters])
+
   return (
     <View style={styles.screen}>
-      <Text>The Filter Screen</Text>
+      <Text style={styles.title}>Available / Restrictions</Text>
+      <FilterSwitch
+        label="guluten-free"
+        state={isGlutenFree}
+        onChange={setIsGlutenFree}
+      />
+      <FilterSwitch
+        label="lactose-free"
+        state={isLactoseFree}
+        onChange={setIsLactoseFree}
+      />
+      <FilterSwitch label="vegan" state={isVegan} onChange={setIsVegan} />
+      <FilterSwitch
+        label="vegetarian"
+        state={isVegetarian}
+        onChange={setIsVegetarian}
+      />
     </View>
   )
 }
@@ -27,14 +81,41 @@ FilterScreen.navigationOptions = navData => {
         />
       </HeaderButtons>
     ),
+    headerRight: () => {
+      return (
+        <HeaderButtons HeaderButtonComponent={HeaderButton}>
+          <Item
+            title="Save"
+            iconName="ios-save"
+            // ちょっとトリッキーな、Navigationからコンポーネントのデータをみるやり方
+            // コンポーネント側でstateを参照する関数を用意して、navigationに渡してる
+            // それをここで実行する
+            // 普通はReduxでみるんだけど、こういう用途はあるのかな？
+            onPress={navData.navigation.getParam('save')}
+          />
+        </HeaderButtons>
+      )
+    },
   }
 }
 
 const styles = StyleSheet.create({
   screen: {
     flex: 1,
-    justifyContent: 'center',
     alignItems: 'center',
+  },
+  title: {
+    fontSize: 'open-sans-bold',
+    fontSize: 22,
+    margin: 20,
+    textAlign: 'center',
+  },
+  filterContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    width: '80%',
+    marginVertical: 15,
   },
 })
 
