@@ -21,7 +21,7 @@ const mealsReducer = (state = initialState, action) => {
         return { ...state, favoriteMeals: updateFavMeals }
       } else {
         const meal = state.meals.find(meal => meal.id === action.payload.mealId)
-        // concatは新しい配列を返す
+        // concatは新しい配列を返す。
         return { ...state, favoriteMeals: state.favoriteMeals.concat(meal) }
       }
     default:
