@@ -35,6 +35,17 @@ const MealDetailScreen = props => {
     props.navigation.setParams({ toggleFav: toggleFavoriteHandler })
   }, [toggleFavoriteHandler])
 
+  const isFav = useSelector(state =>
+    state.meals.favoriteMeals.some(meal => meal.id === meal.id)
+  )
+
+  useEffect(() => {
+    // ヘッダーにスターの状態を渡したい
+    // 初期表示は渡せないので、ヘッダー遷移時にイベントとして、MealListからもらう
+    // MealListでReduxとも接続するし結構カオスになる気がする
+    props.navigation.setParams({ isFav })
+  }, [isFav])
+
   return (
     <ScrollView>
       <Image source={{ uri: meal.imageUrl }} style={styles.image} />
@@ -60,6 +71,7 @@ MealDetailScreen.navigationOptions = navigationData => {
   // useSelectorはfunctinalComponentの中でしか使えないから、ここでは使えない
   const mealTitle = navigationData.navigation.getParam('mealTitle')
   const toggleFavorite = navigationData.navigation.getParam('toggleFav')
+  const isFav = navigationData.navigation.getParam('isFav')
 
   return {
     headerTitle: mealTitle,
@@ -70,7 +82,11 @@ MealDetailScreen.navigationOptions = navigationData => {
     // HeaderButtonsコンポーネントに、作ったHeaderComponentを渡すのがちょっと謎
     headerRight: () => (
       <HeaderButtons HeaderButtonComponent={HeaderButton}>
-        <Item title="Favorite" iconName="ios-star" onPress={toggleFavorite} />
+        <Item
+          title="Favorite"
+          iconName={isFav ? 'ios-star' : 'ios-star-outline'}
+          onPress={toggleFavorite}
+        />
       </HeaderButtons>
     ),
   }
