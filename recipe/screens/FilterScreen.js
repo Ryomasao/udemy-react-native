@@ -1,10 +1,11 @@
 import React, { useState, useEffect, useCallback } from 'react'
 import { View, Text, StyleSheet, Switch } from 'react-native'
 import { HeaderButtons, Item } from 'react-navigation-header-buttons'
-import { connect } from 'react-redux'
+import { useDispatch } from 'react-redux'
 
 import HeaderButton from '../components/HeaderButton'
 import Colors from '../constants/Color'
+import { setFilters } from '../store/actions/meals'
 
 const FilterSwitch = props => {
   return (
@@ -28,6 +29,8 @@ const FilterScreen = props => {
   const [isVegan, setIsVegan] = useState(false)
   const [isVegetarian, setIsVegetarian] = useState(false)
 
+  const dispatch = useDispatch()
+
   // saveFilters関数はrenderingの度に作成されてしまう
   // useCallbackを使うことで、[]に指定した値が変わらない限り、関数は生成されない
   const saveFilters = useCallback(() => {
@@ -37,8 +40,9 @@ const FilterScreen = props => {
       vegan: isVegan,
       vegetraian: isVegetarian,
     }
-    console.log(appliedFiters)
-  }, [isGlutenFree, isLactoseFree, isVegan, isVegetarian])
+
+    dispatch(setFilters(appliedFiters))
+  }, [isGlutenFree, isLactoseFree, isVegan, isVegetarian, dispatch])
 
   // そしてuseEffectも同じで、saveFilter関数がかわったタイミングでのみ実行する
   useEffect(() => {
@@ -120,4 +124,4 @@ const styles = StyleSheet.create({
   },
 })
 
-export default connect(state => state)(FilterScreen)
+export default FilterScreen
