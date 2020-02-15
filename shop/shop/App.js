@@ -1,19 +1,23 @@
-import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import React from 'react'
+import { SafeAreaView } from 'react-native'
+import { createStore, combineReducers } from 'redux'
+import { Provider } from 'react-redux'
+
+import productReducer from './store/reducers/product'
+import ProductOverViewScreen from './screens/shop/ProductsOverViewScreen'
+
+const rootReducer = {
+  product: productReducer,
+}
+
+const store = createStore(combineReducers(rootReducer))
 
 export default function App() {
   return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-    </View>
-  );
+    <Provider store={store}>
+      <SafeAreaView>
+        <ProductOverViewScreen />
+      </SafeAreaView>
+    </Provider>
+  )
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
