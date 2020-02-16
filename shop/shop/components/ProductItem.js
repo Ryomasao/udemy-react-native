@@ -9,7 +9,7 @@ import {
 } from 'react-native'
 import Colros from '../constants/Colors'
 
-const ProductItem = ({ item, onSelect }) => {
+const ProductItem = ({ item, onSelect, onAddToCart }) => {
   const { id, title, price, imageUrl } = item
   return (
     <TouchableOpacity onPress={() => onSelect({ id, title })}>
@@ -27,7 +27,11 @@ const ProductItem = ({ item, onSelect }) => {
             title="View Detail"
             onPress={() => onSelect({ id, title })}
           />
-          <Button color={Colros.primary} title="to Card" onPress={() => {}} />
+          <Button
+            color={Colros.primary}
+            title="to Card"
+            onPress={() => onAddToCart(item)}
+          />
         </View>
       </View>
     </TouchableOpacity>

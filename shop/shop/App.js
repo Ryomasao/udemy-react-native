@@ -4,8 +4,10 @@ import * as Font from 'expo-font'
 import { AppLoading } from 'expo'
 import { enableScreens } from 'react-native-screens'
 import { Provider } from 'react-redux'
+import { composeWithDevTools } from 'redux-devtools-extension'
 
 import productReducer from './store/reducers/product'
+import cartReducer from './store/reducers/cart'
 import ShopNavigator from './navigation/Shopnavigator'
 
 // for perform
@@ -20,9 +22,10 @@ const fetchFonts = () => {
 
 const rootReducer = {
   product: productReducer,
+  cart: cartReducer,
 }
 
-const store = createStore(combineReducers(rootReducer))
+const store = createStore(combineReducers(rootReducer), composeWithDevTools())
 
 export default function App() {
   const [fontLoaded, setFontLoaded] = useState(false)

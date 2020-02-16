@@ -1,8 +1,9 @@
 import React from 'react'
 import { View, StyleSheet } from 'react-native'
-import { useSelector } from 'react-redux'
+import { useSelector, useDispatch } from 'react-redux'
 
 import ProductList from '../../components/ProductList'
+import * as cartActions from '../../store/actions/cart'
 
 const ProductsOverViewScreen = props => {
   const availableProducts = useSelector(
@@ -18,11 +19,17 @@ const ProductsOverViewScreen = props => {
     navigation.navigate('ProductDetail', { id, title })
   }
 
+  const dispatch = useDispatch()
+  const handleAddToCart = product => {
+    dispatch(cartActions.addToCart(product))
+  }
+
   return (
     <View style={styles.screen}>
       <ProductList
         availableProducts={availableProducts}
         onSelect={onSelectProduct}
+        onAddToCart={handleAddToCart}
       />
     </View>
   )

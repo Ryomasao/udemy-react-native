@@ -1,7 +1,9 @@
 import React from 'react'
 import { View, Text, Image, Button, ScrollView, StyleSheet } from 'react-native'
-import { useSelector } from 'react-redux'
+import { useSelector, useDispatch } from 'react-redux'
+
 import Colors from '../../constants/Colors'
+import * as cartActions from '../../store/actions/cart'
 
 const ProductsDetailScreen = props => {
   const { id } = props.navigation.state.params
@@ -11,11 +13,20 @@ const ProductsDetailScreen = props => {
 
   const { price, description, imageUrl } = selectedProduct
 
+  const dispatch = useDispatch()
+  const handleOnPress = () => {
+    dispatch(cartActions.addToCart(selectedProduct))
+  }
+
   return (
     <ScrollView>
       <Image source={{ uri: imageUrl }} style={styles.image} />
       <View style={styles.actions}>
-        <Button color={Colors.primary} title="Add to Card" onPress={() => {}} />
+        <Button
+          color={Colors.primary}
+          title="Add to Card"
+          onPress={handleOnPress}
+        />
       </View>
       <Text style={styles.price}>${price.toFixed(2)}$</Text>
       <Text style={styles.description}>{description}</Text>

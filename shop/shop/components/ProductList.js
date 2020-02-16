@@ -3,9 +3,11 @@ import { FlatList, View } from 'react-native'
 
 import ProductItem from '../components/ProductItem'
 
-const ProductList = ({ availableProducts, onSelect }) => {
+const ProductList = ({ availableProducts, onSelect, onAddToCart }) => {
   const renderItem = ({ item }) => {
-    return <ProductItem item={item} onSelect={onSelect} />
+    return (
+      <ProductItem item={item} onSelect={onSelect} onAddToCart={onAddToCart} />
+    )
   }
 
   return (
