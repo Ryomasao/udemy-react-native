@@ -42,7 +42,13 @@ ProductsOverViewScreen.navigationOptions = ({ navigation }) => {
     headerTitle: 'All Products',
     headerRight: () => (
       <HeaderButtons HeaderButtonComponent={HeaderButton}>
-        <Item title="Favorite" iconName="ios-cart" onPress={() => {}} />
+        <Item
+          title="Favorite"
+          iconName="ios-cart"
+          onPress={() => {
+            navigation.navigate('Cart')
+          }}
+        />
       </HeaderButtons>
     ),
   }
