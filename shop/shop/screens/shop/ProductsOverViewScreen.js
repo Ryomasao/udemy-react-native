@@ -1,9 +1,11 @@
 import React from 'react'
 import { View, StyleSheet } from 'react-native'
 import { useSelector, useDispatch } from 'react-redux'
+import { HeaderButtons, Item } from 'react-navigation-header-buttons'
 
-import ProductList from '../../components/ProductList'
+import ProductList from '../../components/shop/ProductList'
 import * as cartActions from '../../store/actions/cart'
+import HeaderButton from '../../components/UI/HeaderButton'
 
 const ProductsOverViewScreen = props => {
   const availableProducts = useSelector(
@@ -37,7 +39,12 @@ const ProductsOverViewScreen = props => {
 
 ProductsOverViewScreen.navigationOptions = ({ navigation }) => {
   return {
-    title: 'All Products',
+    headerTitle: 'All Products',
+    headerRight: () => (
+      <HeaderButtons HeaderButtonComponent={HeaderButton}>
+        <Item title="Favorite" iconName="ios-cart" onPress={() => {}} />
+      </HeaderButtons>
+    ),
   }
 }
 

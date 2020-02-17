@@ -1,7 +1,7 @@
 import React from 'react'
-import { FlatList, View } from 'react-native'
+import { FlatList } from 'react-native'
 
-import ProductItem from '../components/ProductItem'
+import ProductItem from './ProductItem'
 
 const ProductList = ({ availableProducts, onSelect, onAddToCart }) => {
   const renderItem = ({ item }) => {

@@ -7,7 +7,7 @@ import {
   TouchableOpacity,
   StyleSheet,
 } from 'react-native'
-import Colros from '../constants/Colors'
+import Colros from '../../constants/Colors'
 
 const ProductItem = ({ item, onSelect, onAddToCart }) => {
   const { id, title, price, imageUrl } = item
