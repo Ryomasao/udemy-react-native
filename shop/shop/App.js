@@ -8,6 +8,7 @@ import { composeWithDevTools } from 'redux-devtools-extension'
 
 import productReducer from './store/reducers/product'
 import cartReducer from './store/reducers/cart'
+import orderReducer from './store/reducers/orders'
 import ShopNavigator from './navigation/Shopnavigator'
 
 // for perform
@@ -23,6 +24,7 @@ const fetchFonts = () => {
 const rootReducer = {
   product: productReducer,
   cart: cartReducer,
+  order: orderReducer,
 }
 
 const store = createStore(combineReducers(rootReducer), composeWithDevTools())

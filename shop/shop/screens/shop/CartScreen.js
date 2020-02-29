@@ -5,10 +5,7 @@ import { useSelector, useDispatch } from 'react-redux'
 import Color from '../../constants/Colors'
 import CartItem from '../../components/shop/CartItem'
 import * as cartActions from '../../store/actions/cart'
-
-const renderItem = ({ item }) => {
-  return <CartItem item={item} onRemove={() => {}} />
-}
+import * as ordersActions from '../../store/actions/orders'
 
 const CartScreen = () => {
   // state.cartはオブジェクトでアイテムをもってるので、配列に置き換える
@@ -24,8 +21,13 @@ const CartScreen = () => {
   const cartTotalAmount = useSelector(state => state.cart.totalAmount)
 
   const dispatch = useDispatch()
+
   const handleRemove = id => {
     dispatch(cartActions.removeFromCart(id))
+  }
+
+  const handleOrder = (cartItems, totalAmount) => {
+    dispatch(ordersActions.addOrder(cartItems, totalAmount))
   }
 
   return (
@@ -35,7 +37,11 @@ const CartScreen = () => {
           Total:{' '}
           <Text style={styles.amount}>${cartTotalAmount.toFixed(2)}</Text>
         </Text>
-        <Button title="Order Now" disabled={cartItems.length === 0} />
+        <Button
+          title="Order Now"
+          disabled={cartItems.length === 0}
+          onPress={() => handleOrder(cartItems, cartTotalAmount)}
+        />
       </View>
       <FlatList
         extraData={cartTotalAmount}
