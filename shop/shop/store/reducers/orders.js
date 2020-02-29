@@ -9,8 +9,13 @@ export default (state = initialState, action) => {
   switch (action.type) {
     case ADD_ORDER: {
       const { items, amount } = action.orderData
-      const newOrder = new Order(new Date().toString, items, amount, new Date())
-      return { ...state, order: [...state.orders, newOrder] }
+      const newOrder = new Order(
+        new Date().toString(),
+        items,
+        amount,
+        new Date()
+      )
+      return { ...state, orders: [...state.orders, newOrder] }
     }
     default:
       return state

@@ -40,10 +40,21 @@ const ProductsOverViewScreen = props => {
 ProductsOverViewScreen.navigationOptions = ({ navigation }) => {
   return {
     headerTitle: 'All Products',
+    headerLeft: () => (
+      <HeaderButtons HeaderButtonComponent={HeaderButton}>
+        <Item
+          title="Menu"
+          iconName="ios-menu"
+          onPress={() => {
+            navigation.toggleDrawer()
+          }}
+        />
+      </HeaderButtons>
+    ),
     headerRight: () => (
       <HeaderButtons HeaderButtonComponent={HeaderButton}>
         <Item
-          title="Favorite"
+          title="Cart"
           iconName="ios-cart"
           onPress={() => {
             navigation.navigate('Cart')
