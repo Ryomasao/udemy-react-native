@@ -4,12 +4,23 @@ import { useSelector, useDispatch } from 'react-redux'
 import { HeaderButtons, Item } from 'react-navigation-header-buttons'
 
 import HeaderButton from '../../components/UI/HeaderButton'
+import OrderItem from '../../components/shop/OrderItem'
 
 const OrderScreen = props => {
   const orders = useSelector(state => state.order.orders)
 
   return (
-    <FlatList data={orders} renderItem={({ item }) => <Text>{item.id}</Text>} />
+    <FlatList
+      data={orders}
+      renderItem={({ item }) => (
+        // ここがインスタンスからplainの境界
+        <OrderItem
+          amount={item.totalAmount}
+          date={item.readbleDate}
+          items={item.items}
+        />
+      )}
+    />
   )
 }
 

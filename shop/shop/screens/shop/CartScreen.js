@@ -48,7 +48,11 @@ const CartScreen = () => {
         data={cartItems}
         keyExtractor={item => item.id}
         renderItem={({ item }) => (
-          <CartItem item={item} onRemove={() => handleRemove(item.id)} />
+          <CartItem
+            item={item}
+            onRemove={() => handleRemove(item.id)}
+            deleteable
+          />
         )}
       />
     </View>
