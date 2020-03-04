@@ -1,15 +1,7 @@
 import React from 'react'
-import {
-  View,
-  Text,
-  Image,
-  Button,
-  TouchableOpacity,
-  StyleSheet,
-} from 'react-native'
-import Colros from '../../constants/Colors'
+import { View, Text, Image, TouchableOpacity, StyleSheet } from 'react-native'
 
-const ProductItem = ({ item, onSelect, onAddToCart }) => {
+const ProductItem = ({ item, onSelect, children }) => {
   const { id, title, price, imageUrl } = item
   return (
     <TouchableOpacity onPress={() => onSelect({ id, title })}>
@@ -21,18 +13,7 @@ const ProductItem = ({ item, onSelect, onAddToCart }) => {
           <Text style={styles.title}>{title}</Text>
           <Text style={styles.price}>${price.toFixed(2)}</Text>
         </View>
-        <View style={styles.actions}>
-          <Button
-            color={Colros.primary}
-            title="View Detail"
-            onPress={() => onSelect({ id, title })}
-          />
-          <Button
-            color={Colros.primary}
-            title="to Card"
-            onPress={() => onAddToCart(item)}
-          />
-        </View>
+        <View style={styles.actions}>{children}</View>
       </View>
     </TouchableOpacity>
   )

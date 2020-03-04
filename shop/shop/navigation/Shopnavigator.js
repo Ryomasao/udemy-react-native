@@ -9,6 +9,7 @@ import ProductOverViewScreen from '../screens/shop/ProductsOverViewScreen'
 import ProductDetailScreen from '../screens/shop/ProductDetailScreen'
 import CartScreen from '../screens/shop/CartScreen'
 import OrderScreen from '../screens/shop/OrderScreen'
+import UserProductScreen from '../screens/user/UserProductScreen'
 
 const defaultNavigationOption = {
   headerStyle: {
@@ -57,6 +58,24 @@ const OrderNavigator = createStackNavigator(
   }
 )
 
+const AdminNavigator = createStackNavigator(
+  {
+    UserProduct: {
+      screen: UserProductScreen,
+    },
+  },
+  {
+    navigationOptions: {
+      // わかりにくい。ドロワー表示した際に表示されるアイコン
+      // stackNavigatorの関数にドロワー表示を書いてる
+      drawerIcon: drawerConfig => (
+        <Ionicons name="ios-list" size={23} color={drawerConfig.tintColor} />
+      ),
+    },
+    defaultNavigationOptions: defaultNavigationOption,
+  }
+)
+
 // drawer配下はstachじゃなくって直接screenをいれてもいい
 // ただ基本Stackのヘッダーを共有したいから、Stackを挟む事が多いのかな
 // また、ドロワーの制御は、コンポーネントのヘッダー側でトグルの関数を入れることで使える。
@@ -70,6 +89,9 @@ const ShopNavigator = createDrawerNavigator(
     },
     Orders: {
       screen: OrderNavigator,
+    },
+    Admin: {
+      screen: AdminNavigator,
     },
   },
   { contentOptions: {} }

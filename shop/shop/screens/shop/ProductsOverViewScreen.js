@@ -1,11 +1,12 @@
 import React from 'react'
-import { View, StyleSheet } from 'react-native'
+import { Button, FlatList, StyleSheet } from 'react-native'
 import { useSelector, useDispatch } from 'react-redux'
 import { HeaderButtons, Item } from 'react-navigation-header-buttons'
 
-import ProductList from '../../components/shop/ProductList'
+import Colors from '../../constants/Colors'
 import * as cartActions from '../../store/actions/cart'
 import HeaderButton from '../../components/UI/HeaderButton'
+import ProductItem from '../../components/shop/ProductItem'
 
 const ProductsOverViewScreen = props => {
   const availableProducts = useSelector(
@@ -14,7 +15,7 @@ const ProductsOverViewScreen = props => {
 
   const { navigation } = props
 
-  const onSelectProduct = ({ id, title }) => {
+  const selectItemHandler = ({ id, title }) => {
     // 遷移先のscreenでidをもとにreduxを参照する
     // ただし、遷移先のscreenのheaderにタイトルを表示したいので、タイトルも渡す
     // ライフサイクル的にreduxじゃ間に合わない
@@ -27,13 +28,29 @@ const ProductsOverViewScreen = props => {
   }
 
   return (
-    <View style={styles.screen}>
-      <ProductList
-        availableProducts={availableProducts}
-        onSelect={onSelectProduct}
-        onAddToCart={handleAddToCart}
-      />
-    </View>
+    <FlatList
+      data={availableProducts}
+      keyExtractor={product => product.id}
+      renderItem={({ item }) => (
+        <ProductItem
+          item={item}
+          onSelect={() => selectItemHandler({ id: item.id, title: item.title })}
+        >
+          <Button
+            color={Colors.primary}
+            title="View Detail"
+            onPress={() =>
+              selectItemHandler({ id: item.id, title: item.title })
+            }
+          />
+          <Button
+            color={Colors.primary}
+            title="to Card"
+            onPress={() => handleAddToCart(item)}
+          />
+        </ProductItem>
+      )}
+    />
   )
 }
 
