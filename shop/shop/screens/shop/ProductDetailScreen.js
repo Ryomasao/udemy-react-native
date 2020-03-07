@@ -24,11 +24,11 @@ const ProductsDetailScreen = props => {
       <View style={styles.actions}>
         <Button
           color={Colors.primary}
-          title="Add to Card"
+          title="Add to Cart"
           onPress={handleOnPress}
         />
       </View>
-      <Text style={styles.price}>${price.toFixed(2)}$</Text>
+      <Text style={styles.price}>${price.toFixed(2)}</Text>
       <Text style={styles.description}>{description}</Text>
     </ScrollView>
   )

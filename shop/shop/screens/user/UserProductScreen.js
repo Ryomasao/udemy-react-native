@@ -12,7 +12,9 @@ const UserProductScreen = props => {
   const userProducts = useSelector(state => state.product.userProducts)
 
   const dispatch = useDispatch()
-  const handleEdit = () => {}
+  const handleEdit = id => {
+    props.navigation.navigate('EditProduct', { productId: id })
+  }
   const handleDelete = id => {
     dispatch(productActions.deleteProduct(id))
   }
@@ -22,11 +24,11 @@ const UserProductScreen = props => {
       data={userProducts}
       keyExtractor={item => item.id}
       renderItem={({ item }) => (
-        <ProductItem item={item} onSelect={() => {}}>
+        <ProductItem item={item} onSelect={() => handleEdit(item.id)}>
           <Button
             title="Edit"
             colors={Colors.primary}
-            onPress={() => handleEdit()}
+            onPress={() => handleEdit(item.id)}
           />
           <Button
             title="Delete"
@@ -49,6 +51,17 @@ UserProductScreen.navigationOptions = ({ navigation }) => {
           iconName="ios-menu"
           onPress={() => {
             navigation.toggleDrawer()
+          }}
+        />
+      </HeaderButtons>
+    ),
+    headerRight: () => (
+      <HeaderButtons HeaderButtonComponent={HeaderButton}>
+        <Item
+          title="Menu"
+          iconName="ios-create"
+          onPress={() => {
+            navigation.navigate('EditProduct')
           }}
         />
       </HeaderButtons>
