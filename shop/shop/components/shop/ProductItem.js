@@ -1,11 +1,13 @@
 import React from 'react'
 import { View, Text, Image, TouchableOpacity, StyleSheet } from 'react-native'
 
+import Card from '../UI/Card'
+
 const ProductItem = ({ item, onSelect, children }) => {
   const { id, title, price, imageUrl } = item
   return (
-    <TouchableOpacity onPress={() => onSelect({ id, title })}>
-      <View style={styles.product}>
+    <Card style={styles.product}>
+      <TouchableOpacity onPress={() => onSelect({ id, title })}>
         <View style={styles.imageContainer}>
           <Image source={{ uri: imageUrl }} style={styles.image} />
         </View>
@@ -14,20 +16,13 @@ const ProductItem = ({ item, onSelect, children }) => {
           <Text style={styles.price}>${price.toFixed(2)}</Text>
         </View>
         <View style={styles.actions}>{children}</View>
-      </View>
-    </TouchableOpacity>
+      </TouchableOpacity>
+    </Card>
   )
 }
 
 const styles = StyleSheet.create({
   product: {
-    shadowColor: 'black',
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.26,
-    shadowRadius: 8,
-    backgroundColor: 'white',
-    borderRadius: 10,
-
     height: 300,
     margin: 20,
   },

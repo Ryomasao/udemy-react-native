@@ -1,15 +1,15 @@
 import React, { useState } from 'react'
 import { View, Button, Text, StyleSheet } from 'react-native'
-import { Ionicons } from '@expo/vector-icons'
 
 import CartItem from './CartItem'
 import Colors from '../../constants/Colors'
+import Card from '../UI/Card'
 
 const OrderItem = ({ amount, date, items }) => {
   const [showDetails, setShowDetails] = useState(false)
 
   return (
-    <View style={styles.orderItem}>
+    <Card style={styles.orderItem}>
       <View style={styles.summary}>
         <Text style={styles.totalAmount}>${amount.toFixed(2)}</Text>
         <Text style={styles.date}>{date}</Text>
@@ -28,18 +28,11 @@ const OrderItem = ({ amount, date, items }) => {
           ))}
         </View>
       )}
-    </View>
+    </Card>
   )
 }
 const styles = StyleSheet.create({
   orderItem: {
-    shadowColor: 'black',
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.26,
-    shadowRadius: 8,
-    backgroundColor: 'white',
-    borderRadius: 10,
-
     margin: 20,
     padding: 10,
   },

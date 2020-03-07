@@ -6,6 +6,7 @@ import Color from '../../constants/Colors'
 import CartItem from '../../components/shop/CartItem'
 import * as cartActions from '../../store/actions/cart'
 import * as ordersActions from '../../store/actions/orders'
+import Card from '../../components/UI/Card'
 
 const CartScreen = () => {
   // state.cartはオブジェクトでアイテムをもってるので、配列に置き換える
@@ -32,7 +33,7 @@ const CartScreen = () => {
 
   return (
     <View style={styles.screen}>
-      <View style={styles.summary}>
+      <Card style={styles.summary}>
         <Text style={styles.summaryText}>
           Total:{' '}
           <Text style={styles.amount}>
@@ -44,7 +45,7 @@ const CartScreen = () => {
           disabled={cartItems.length === 0}
           onPress={() => handleOrder(cartItems, cartTotalAmount)}
         />
-      </View>
+      </Card>
       <FlatList
         extraData={cartTotalAmount}
         data={cartItems}
@@ -77,13 +78,6 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     marginBottom: 20,
     padding: 10,
-
-    shadowColor: 'black',
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.26,
-    shadowRadius: 8,
-    backgroundColor: 'white',
-    borderRadius: 10,
   },
   summaryText: {
     fontFamily: 'open-sans-bold',

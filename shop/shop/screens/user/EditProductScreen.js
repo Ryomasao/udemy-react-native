@@ -37,6 +37,7 @@ const EditProductScreen = props => {
         productActions.createProduct(title, imageUrl, description, +price)
       )
     }
+    props.navigation.goBack()
   }, [dispatch, title, imageUrl, price, description])
 
   // ヘッダーでdispatchしたい場合の手段
