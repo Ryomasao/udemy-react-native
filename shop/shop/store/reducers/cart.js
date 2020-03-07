@@ -1,4 +1,5 @@
 import { ADD_TO_CART, REMOVE_FROM_CART } from '../actions/cart'
+import { DELETE_PRODUCT } from '../actions/product'
 import { ADD_ORDER } from '../actions/orders'
 import CartItem from '../../models/cart-item'
 
@@ -67,6 +68,22 @@ export default (state = initialState, action) => {
     // なので、別のreducerのアクションも普通に飛んでくる
     case ADD_ORDER: {
       return initialState
+    }
+    case DELETE_PRODUCT: {
+      const { id } = action
+      if (!state.items[id]) {
+        return state
+      }
+
+      const updatedItems = { ...state.item }
+      const itemTotal = state.items[id].sum
+      delete updatedItems[id]
+
+      return {
+        ...state,
+        items: updatedItems,
+        totalAmount: state.totalAmount - itemTotal,
+      }
     }
     default:
       return state
