@@ -57,18 +57,19 @@ const EditProductScreen = props => {
     formIsValid: editedProduct ? true : false,
   })
 
-  const textChangeHandler = (inputIdentfier, text) => {
-    let isValid = false
-    if (text.trim().length > 0) {
-      isValid = true
-    }
-    dispatchFormState({
-      type: FORM_INPUT_UPDATE,
-      value: text,
-      isValid,
-      input: inputIdentfier,
-    })
-  }
+  // inputChangeHandlerは、子コンポーネントにわたす関数なので、積極的にuseCallbackを使う
+  // 子コンポーネントにわたすときにアロー関数 or bindなんかすると意味なくなるからね！
+  const inputChangeHandler = useCallback(
+    (inputIdentfier, inputValue, inputValidity) => {
+      dispatchFormState({
+        type: FORM_INPUT_UPDATE,
+        value: inputValue,
+        isValid: inputValidity,
+        input: inputIdentfier,
+      })
+    },
+    [dispatchFormState]
+  )
 
   const dispatch = useDispatch()
 
@@ -109,46 +110,50 @@ const EditProductScreen = props => {
     <ScrollView>
       <View style={styles.form}>
         <Input
+          id="title"
           label="Title"
-          value={formState.inputValues.title}
-          isValid={formState.inputValidities.title}
-          onChangeText={text => textChangeHandler('title', text)}
           errorText="please enter a valid title"
           autoCapitalize="sentences"
           autoCorrect
           returnKeyType="next"
+          onInputChange={inputChangeHandler}
+          initialValue={editedProduct ? editedProduct.title : ''}
+          initialValid={!!editedProduct}
         />
         <Input
+          id="imageUrl"
           label="Image Url"
-          value={formState.inputValues.imageUrl}
-          isValid={formState.inputValidities.imageUrl}
-          onChangeText={text => textChangeHandler('imageUrl', text)}
           errorText="please enter a valid imageUrl"
           autoCapitalize="sentences"
           autoCorrect
           returnKeyType="next"
+          onInputChange={inputChangeHandler}
+          initialValue={editedProduct ? editedProduct.imageUrl : ''}
+          initialValid={!!editedProduct}
         />
         {editedProduct ? null : (
           <Input
+            id="price"
             label="Price"
-            value={formState.inputValues.price}
-            onChangeText={text => textChangeHandler('price', text)}
-            isValid={formState.inputValidities.price}
             errorText="please enter a valid price"
             keyboardType="decimal-pad"
             returnKeyType="next"
+            onInputChange={inputChangeHandler}
+            initialValue={editedProduct ? editedProduct.price : ''}
+            initialValid={!!editedProduct}
           />
         )}
         <Input
+          id="description"
           label="Description"
-          value={formState.inputValues.description}
-          onChangeText={text => textChangeHandler('description', text)}
-          isValid={formState.inputValidities.description}
           errorText="please enter a valid description"
           autoCapitalize="sentences"
           autoCorrect
           multiline
           numberOfLines={3}
+          onInputChange={inputChangeHandler}
+          initialValue={editedProduct ? editedProduct.description : ''}
+          initialValid={!!editedProduct}
         />
       </View>
     </ScrollView>
